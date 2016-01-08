@@ -1,0 +1,11 @@
+{
+  "useMethodPrefix": false,
+  "useModelPostfix": false,
+  "useControllerPostfix": false,
+  "useEnumPostfix": false,
+  "useConstructorsForConfig": false,
+  "collectParameters": true,
+  "brandLabel": "Botify",
+  "nodeHttpClient": "NODE_SUPERAGENT",
+  "arraySerialization": "CSV"
+}
