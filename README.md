@@ -44,10 +44,8 @@ BotifySDK.AnalysisController.getAnalysisSummary({
 ```
 
 ### `getUrlsAggs`
-SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with.
+SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with. [More information](https://github.com/botify-labs/botify-sdk-js-middlewares/blob/master/docs/middlewares/queryMiddleware.md)
 
 
 ## Optimization
-Middlewares are avalaible in the package [botify-sdk-middlewares](https://github.com/botify-labs/botify-sdk-js-middlewares).
-
-Consider using them for optimization and rate limit leverage. Some have been included by default in this package.
+Middlewares are avalaible in the package [botify-sdk-middlewares](https://github.com/botify-labs/botify-sdk-js-middlewares). Consider using them for optimization and rate limit leverage. Some have been included by default in this package.
