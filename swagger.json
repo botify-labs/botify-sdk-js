@@ -1,0 +1,2240 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "description": "Botify Saas API",
+    "title": "Botify API",
+    "x-codegen-settings": {
+      "useMethodPrefix": false,
+      "useModelPostfix": false,
+      "useControllerPostfix": false,
+      "useEnumPostfix": false,
+      "useConstructorsForConfig": false,
+      "collectParameters": true,
+      "brandLabel": "Botify",
+      "nodeHttpClient": "NODE_SUPERAGENT",
+      "arraySerialization": "CSV"
+    }
+  },
+  "paths": {
+    "/analyses/{username}/{project_slug}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CrawlListSerializer"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "List all active analyses for a project",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "List all active analyses for a project",
+        "operationId": "getAnalyses"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/AnalysisDetail"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Gets an Analysis detail",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an Analysis detail",
+        "operationId": "getAnalysisSummary"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/crawl_statistics": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Return global statistics for an analysis",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Return global statistics for an analysis",
+        "operationId": "getCrawlStatistics"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/crawl_statistics/time": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Return statistics by 1mn, 5mn or 60mn for an analysis",
+        "parameters": [
+          {
+            "description": "max number of elements to retrieve",
+            "format": "int32",
+            "required": false,
+            "in": "query",
+            "type": "integer",
+            "name": "limit"
+          },
+          {
+            "description": "frequency of sampling",
+            "required": true,
+            "type": "string",
+            "name": "frequency",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Return statistics by 1mn, 5mn or 60mn for an analysis",
+        "operationId": "getCrawlStatisticsByFrequency"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/crawl_statistics/urls/{list_type}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "list_type",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Return a list of 1000 latest URLs crawled or with errors",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Return a list of 1000 latest URLs crawled or with errors",
+        "operationId": "getCrawlStatisticsUrls"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/ganalytics/orphan_urls/{medium}/{source}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "medium",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "source",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Orphan URLs",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Orphan URLs",
+        "operationId": "getGanalyticsOrphanURLs"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/links/percentiles": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Links percentiles",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Links percentiles",
+        "operationId": "getLinksPercentiles"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/pagerank/lost": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Lost pagerank",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Lost pagerank",
+        "operationId": "getPageRankLost"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/sitemaps/report": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Sitemaps reports",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Sitemaps reports",
+        "operationId": "getSitemapsReport"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/sitemaps/samples/out_of_config": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Sitemaps samples: out of config",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Sitemaps samples: out of config",
+        "operationId": "getSitemapsSamplesOutOfConfig"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/sitemaps/samples/sitemap_only": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Sitemaps samples: only sitemaps",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Sitemaps samples: only sitemaps",
+        "operationId": "getSitemapsSamplesSitemapsOnly"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/top_domains/domains": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Top domains",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Top domains",
+        "operationId": "getLinksTopDomains"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/features/top_domains/subdomains": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Top subddomains",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Top subddomains",
+        "operationId": "getLinksTopSubdomains"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/pdf": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/PdfExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Creates a new PDFExport object and starts a task that will generate the file. Returns the model id that manages the task",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UrlsFilter"
+            },
+            "name": "UrlsFilter",
+            "in": "body"
+          },
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          },
+          {
+            "description": "",
+            "default": "overview",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "section"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new PDFExport object and starts a task that will generate the file",
+        "operationId": "createPdfExport"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/PdfExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Get list of PDF Exports",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get list of PDF Exports",
+        "operationId": "getPDFExports"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/pdf/{pdf_export_id}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "pdf_export_id",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/PdfExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Checks the status of an UrlExport object- - returns json object with the status.",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Checks the status of an UrlExport object-",
+        "operationId": "getPdfExportStatus"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/UrlsQuery"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Executes a query and returns a paginated response",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UrlsQuery"
+            },
+            "name": "UrlsQuery",
+            "in": "body"
+          },
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          },
+          {
+            "description": "Page Number",
+            "format": "int32",
+            "required": false,
+            "in": "query",
+            "type": "integer",
+            "name": "page"
+          },
+          {
+            "description": "Page Size",
+            "format": "int32",
+            "required": false,
+            "in": "query",
+            "type": "integer",
+            "name": "size"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Executes a query and returns a paginated response",
+        "operationId": "getUrls"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ]
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls/aggs": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Query aggregator. It accepts multiple queries",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UrlsAggsQueries"
+            },
+            "name": "UrlsAggsQueries",
+            "in": "body"
+          },
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Query aggregator",
+        "operationId": "getUrlsAggs"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ]
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls/datamodel": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Gets an Analysis datamodel",
+        "parameters": [
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets an Analysis datamodel",
+        "operationId": "getUrlsDatamodel"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls/export": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CsvExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Creates a new UrlExport object and starts a task that will export the results into a csv. Returns the model id that manages the task",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UrlsQuery"
+            },
+            "name": "UrlsQuery",
+            "in": "body"
+          },
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Creates a new UrlExport object and starts a task that will export the results into a csv",
+        "operationId": "createUrlsExport"
+      },
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CsvExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Get list of Exported Urls",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Get list of Exported Urls",
+        "operationId": "getUrlsExports"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls/export/{url_export_id}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "url_export_id",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/CsvExportStatus"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Checks the status of an CSVUrlExportJob object- - returns json object with the status.",
+        "parameters": [],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Checks the status of an CSVUrlExportJob object-",
+        "operationId": "getUrlsExportStatus"
+      }
+    },
+    "/analyses/{username}/{project_slug}/{analysis_slug}/urls/{url}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "analysis_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "url",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/Default"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Gets the detail of an URL for an analysis",
+        "parameters": [
+          {
+            "description": "",
+            "default": "current",
+            "required": false,
+            "in": "query",
+            "type": "string",
+            "name": "area"
+          },
+          {
+            "description": "",
+            "items": {
+              "type": "string"
+            },
+            "required": false,
+            "collectionFormat": "csv",
+            "in": "query",
+            "type": "array",
+            "name": "fields"
+          }
+        ],
+        "tags": [
+          "Analysis"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Gets the detail of an URL for an analysis",
+        "operationId": "getUrlDetail"
+      }
+    },
+    "/projects/{username}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ProjectSerializer"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "List all active projects for the user",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Project"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "List all active projects for the user",
+        "operationId": "getProjects"
+      }
+    },
+    "/projects/{username}/{project_slug}/filters": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ProjectSavedFilter"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "List all the project's saved queries",
+        "parameters": [
+          {
+            "description": "Page Number",
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "description": "Page Size",
+            "type": "integer",
+            "name": "size",
+            "in": "query"
+          }
+        ],
+        "tags": [
+          "Project"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "List all the project's saved queries",
+        "operationId": "getSavedFilters"
+      }
+    },
+    "/projects/{username}/{project_slug}/filters/{identifier}": {
+      "parameters": [
+        {
+          "required": true,
+          "type": "string",
+          "name": "username",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "project_slug",
+          "in": "path"
+        },
+        {
+          "required": true,
+          "type": "string",
+          "name": "identifier",
+          "in": "path"
+        }
+      ],
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "schema": {
+              "$ref": "#/definitions/ProjectSavedFilter"
+            }
+          },
+          "default": {
+            "description": "error payload",
+            "schema": {
+              "$ref": "#/definitions/DefaultPayload"
+            }
+          }
+        },
+        "description": "Retrieves a Saved Query",
+        "parameters": [],
+        "tags": [
+          "Project"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "summary": "Retrieves a Saved Query",
+        "operationId": "getSavedFilter"
+      }
+    }
+  },
+  "host": "api.sandbox3.botify.com",
+  "schemes": [
+    "http"
+  ],
+  "definitions": {
+    "ProjectSavedFilter": {
+      "required": [
+        "name"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "identifier": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "UrlsAggsQuery": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "aggs": {
+          "description": "",
+          "items": {
+            "type": "object"
+          },
+          "readOnly": false,
+          "type": "array"
+        }
+      }
+    },
+    "DryRun": {
+      "required": [
+        "rules_config",
+        "dataset",
+        "sample_percent"
+      ],
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_status": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "rules_config": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "dataset": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "sample_percent": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "filter_predicate": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "filter_value": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "results": {
+          "readOnly": true,
+          "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "PdfExportStatus": {
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_status": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "results": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "area": {
+          "readOnly": false,
+          "defaultValue": "current",
+          "type": "string",
+          "description": ""
+        },
+        "section": {
+          "readOnly": false,
+          "defaultValue": "overview",
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "AnalysisDetail": {
+      "required": [
+        "user"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "user": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/User"
+        },
+        "slug": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "features": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_done": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_in_queue": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "config": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "date_launched": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_finished": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_last_modified": {
+          "readOnly": false,
+          "type": "string",
+          "description": "Date of last modified analysis",
+          "format": "date-time"
+        },
+        "failures": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "red_button_domain": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "UrlsQuery": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "description": "",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": false,
+          "type": "array"
+        },
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "sort": {
+          "description": "",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": false,
+          "type": "array"
+        }
+      }
+    },
+    "Default": {
+      "type": "object",
+      "properties": {}
+    },
+    "UrlsFilter": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "UserCredentials": {
+      "required": [
+        "username",
+        "password"
+      ],
+      "type": "object",
+      "properties": {
+        "username": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "password": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "UrlsAggsQueries": {
+      "items": {
+        "$ref": "#/definitions/UrlsAggsQuery"
+      },
+      "type": "array"
+    },
+    "FieldValuesResult": {
+      "required": [
+        "value",
+        "nb_urls"
+      ],
+      "type": "object",
+      "properties": {
+        "value": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "nb_urls": {
+          "readOnly": false,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        }
+      }
+    },
+    "ProjectSerializer": {
+      "required": [
+        "name",
+        "slug",
+        "user",
+        "current_settings"
+      ],
+      "type": "object",
+      "properties": {
+        "name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "slug": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "user": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/User"
+        },
+        "current_settings": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/ProjectSettingsSerializer"
+        },
+        "active": {
+          "readOnly": false,
+          "type": "boolean",
+          "description": ""
+        },
+        "date_created": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "DefaultPayload": {
+      "type": "object",
+      "description": "default payload for object for all HTTP codes that are not covered individually",
+      "properties": {
+        "error": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "description": "Error Message"
+            },
+            "error_code": {
+              "type": "string",
+              "description": "Error Code"
+            }
+          }
+        }
+      }
+    },
+    "CsvExportStatus": {
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_status": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "nb_results": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "area": {
+          "readOnly": false,
+          "defaultValue": "current",
+          "type": "string",
+          "description": ""
+        },
+        "query": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/UrlsQuery"
+        },
+        "results": {
+          "readOnly": true,
+          "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "email": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "is_organization": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "date_joined": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "status": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "first_name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "last_name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "company_name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        }
+      }
+    },
+    "SegmentRules": {
+      "required": [
+        "config"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "config": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "date_created": {
+          "readOnly": true,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        }
+      }
+    },
+    "SegmentRulesValidator": {
+      "required": [
+        "config"
+      ],
+      "type": "object",
+      "properties": {
+        "config": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "results": {
+          "readOnly": true,
+          "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "FieldValues": {
+      "required": [
+        "count",
+        "results"
+      ],
+      "type": "object",
+      "properties": {
+        "count": {
+          "readOnly": false,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "results": {
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/FieldValuesResult"
+          },
+          "readOnly": false,
+          "type": "array"
+        }
+      }
+    },
+    "CrawlListSerializer": {
+      "required": [
+        "user"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "user": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/User"
+        },
+        "slug": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "features": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_done": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_in_queue": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "config": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "date_created": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_launched": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_finished": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_last_modified": {
+          "readOnly": false,
+          "type": "string",
+          "description": "Date of last modified analysis",
+          "format": "date-time"
+        }
+      }
+    },
+    "ProjectSettingsSerializer": {
+      "required": [
+        "max_nb_pages"
+      ],
+      "type": "object",
+      "properties": {
+        "start_urls": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "max_nb_pages": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "max_depth": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "compare_crawl": {
+          "readOnly": false,
+          "type": "boolean",
+          "description": ""
+        },
+        "blacklisted_domains": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "allowed_domains": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "respect_nofollow": {
+          "readOnly": false,
+          "type": "boolean",
+          "description": ""
+        },
+        "crawl_gzip": {
+          "readOnly": false,
+          "type": "boolean",
+          "description": ""
+        },
+        "has_robots_txt": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "user_agent": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "max_pages_per_sec": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "extra_headers": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "google_social_auth_id": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "google_analytics_site_id": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": -2147483648,
+          "type": "integer"
+        },
+        "google_analytics_account_email": {
+          "readOnly": false,
+          "type": "string",
+          "description": "Keep email in case user delete his social auth connection"
+        },
+        "google_analytics_nb_days": {
+          "description": "",
+          "format": "int64",
+          "maximum": 90,
+          "readOnly": false,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sitemaps": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "header_settings": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        }
+      }
+    }
+  },
+  "basePath": "/v1",
+  "swagger": "2.0",
+  "securityDefinitions": {
+    "DjangoRestToken": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
