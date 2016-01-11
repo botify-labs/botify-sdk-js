@@ -3,7 +3,7 @@ import nock from 'nock';
 import path from 'path';
 import requireAll from 'require-all';
 
-import BotifySdk, { AnalysisController } from '../lib';
+import BotifySdk from '../src/gen-sdk';
 
 
 /**
@@ -11,15 +11,15 @@ import BotifySdk, { AnalysisController } from '../lib';
  */
 
 
-describe('Index', () => {
+describe('Codegen Index', () => {
   it('must export configuration', () => {
-    const configuration = require(path.resolve(__dirname, '../lib/configuration'));
+    const configuration = require(path.resolve(__dirname, '../src/gen-sdk/configuration'));
     chai.expect(configuration).to.be.equal(BotifySdk.configuration);
   });
 
-  it('must export every controlers', () => {
+  it('must export every controllers', () => {
     const controllers = requireAll({
-      dirname: path.resolve(__dirname, '../lib/Controllers'),
+      dirname: path.resolve(__dirname, '../src/gen-sdk/Controllers'),
     });
 
     const keys = Object.keys(controllers);
@@ -38,7 +38,6 @@ describe('Controllers', () => {
   BotifySdk.configuration.authorization = `Token ${TOKEN}`;
 
   it('must use setup BASEURI', done => {
-    // @TODO use an operation that doesn't have path parameters
     nock(BASEURI)
       .defaultReplyHeaders({
         'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(200, {});
 
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -66,7 +65,7 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(200, {});
 
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -86,7 +85,7 @@ describe('Controllers', () => {
       .reply(200, {});
 
     BotifySdk.configuration.authorization = `Token ${TOKEN}`;
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -96,59 +95,31 @@ describe('Controllers', () => {
   });
 
   it('must encode query parameters', done => {
-    const queryParam = 'http://google.com';
+    const queryParam = 'section://source.com';
 
     nock(BASEURI, { encodedQueryParams: true }) // Disable nock encoding
       .defaultReplyHeaders({
         'Content-Type': 'application/json',
       })
-      .get('/analyses/user/project/analysis/urls/fields/fat/suggest')
+      .post('/analyses/user/project/analysis/pdf')
       .query({
-        value: encodeURIComponent(queryParam),
+        section: encodeURIComponent(queryParam),
         area: 'current',
       })
       .reply(200, {});
 
-    AnalysisController.getUrlsFieldSuggest({
+    BotifySdk.AnalysisController.createPdfExport({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
-      field: 'fat',
       area: 'current',
-      value: queryParam,
+      section: queryParam,
     }, (error, result) => {
       done(error);
     });
   });
 
   it('must join csv collection query parameters by commas', done => {
-    const insightIdentifiers = ['foo', 'bar'];
-
-    nock(BASEURI)
-      .defaultReplyHeaders({
-        'Content-Type': 'application/json',
-      })
-      .post('/analyses/user/project/analysis/insights')
-      .query({
-        insight_identifiers: insightIdentifiers.join(','),
-        area: 'current',
-        trend_limit: 30,
-      })
-      .reply(200, {});
-
-    AnalysisController.getInsights({
-      username: 'user',
-      projectSlug: 'project',
-      analysisSlug: 'analysis',
-      area: 'current',
-      trendLimit: 30,
-      insightIdentifiers,
-    }, (error, result) => {
-      done(error);
-    });
-  });
-
-  it('must join csv collection query parameters by commas (2)', done => {
     const fields = ['foo', 'bar'];
 
     nock(BASEURI)
@@ -162,7 +133,7 @@ describe('Controllers', () => {
       })
       .reply(200, {});
 
-    AnalysisController.getUrlDetail({
+    BotifySdk.AnalysisController.getUrlDetail({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -216,7 +187,7 @@ describe('Controllers', () => {
       })
       .reply(200, {});
 
-    AnalysisController.getUrls({
+    BotifySdk.AnalysisController.getUrls({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -237,7 +208,7 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(200, JSON.stringify(response));
 
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -261,7 +232,7 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(404, JSON.stringify(response));
 
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
@@ -289,7 +260,7 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(500, JSON.stringify(response));
 
-    AnalysisController.getAnalysisSummary({
+    BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',

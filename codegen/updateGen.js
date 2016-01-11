@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 // Usage
-// $ updateLib <swaggerFilePath>
+// $ updateGen <swaggerFilePath>
 //    swaggerFilePath (optional): Path to swagger file. Otherwise use the production one.
 
 
@@ -18,7 +18,7 @@ var KEYS_FILE_PATH = path.join(__dirname, './botify-keys.json');
 var CODEGEN_SETTINGS_FILE_PATH = path.join(__dirname, './codegenSettings.json');
 var SWAGGER_FILE_PATH = path.join(__dirname, '../swagger.json');
 var PACKAGE_JSON_PATH = path.join(__dirname, '../package.json');
-var LIB_PATH = path.join(__dirname, '../lib');
+var LIB_PATH = path.join(__dirname, '../src/gen-sdk');
 
 var ARCHIVE_LIB_FOLDER = 'botifyapilib/lib';
 var ARCHIVE_PACKAGE_JSON = 'botifyapilib/package.json';
@@ -102,7 +102,13 @@ function extractAPIMATICArchive(archiveUrl, cb) {
         entry.pipe(through.obj(function(contents) {
           var jsonData = JSON.parse(contents);
           packageJson.version = jsonData.version;
-          packageJson.dependencies = jsonData.dependencies;
+          // Merge dependencies
+          for (var key in jsonData.dependencies) {
+            if (jsonData.dependencies.hasOwnProperty(key)) {
+              packageJson.dependencies[key] = jsonData.dependencies[key];
+            }
+          }
+
           console.log('Update lib version to ' + packageJson.version);
           fs.writeJsonSync(PACKAGE_JSON_PATH, packageJson, {spaces: 2});
         }));

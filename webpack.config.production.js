@@ -6,7 +6,7 @@ var baseConfig = require('./webpack.config.base');
 var config = Object.create(baseConfig);
 
 config.entry = './src/index.js';
-config.output.filename ='dist/botify-sdk-js.min.js';
+config.output.filename ='dist/botify-sdk.min.js';
 
 config.plugins = [
   new webpack.DefinePlugin({

@@ -1,31 +1,51 @@
 {
-  "name": "botify-sdk-js",
+  "name": "botify-sdk",
   "version": "1.0.0-beta0",
-  "description": "Botify API Javascript SDK",
+  "description": "Botify Rest API SDK",
   "author": "Botify <labs@botify.com>",
+  "license": "MIT",
   "main": "./src/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "src"
+  ],
   "scripts": {
-    "clean": "rimraf dist",
+    "clean": "rimraf lib dist",
     "lint": "eslint .",
     "test": "mocha --compilers js:babel/register --recursive",
     "test:watch": "npm test -- --watch",
     "check": "npm run lint && npm run test",
+    "build:lib": "babel src --out-dir lib",
     "build:dist": "webpack --config webpack.config.production.js",
-    "build": "npm run clean && npm run build:dist",
+    "build": "npm run clean && npm run build:lib && npm run build:dist",
     "stats": "webpack --config webpack.config.stats.js && npm run clean",
-    "preversion": "npm run check && npm run build && git add -A lib dist && git commit -m 'Update bundle'",
-    "postversion": "git push && git push --tags && npm run clean"
+    "preversion": "npm run clean && npm run check",
+    "version": "npm run build",
+    "postversion": "git push && git push --tags && npm run clean",
+    "prepublish": "npm run build",
+    "postpublish": "npm run clean"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/botify-labs/botify-sdk-js.git"
   },
+  "homepage": "https://github.com/botify-labs/botify-sdk-js",
+  "bugs": "https://github.com/botify-labs/botify-sdk-js/issues",
+  "keywords": [
+    "botify",
+    "analytics",
+    "seo",
+    "crawler",
+    "sdk"
+  ],
   "engines": {
-    "node": ">=0.12"
+    "node": ">=0.10"
   },
   "dependencies": {
-    "superagent": "^1.5.0",
-    "string": "^3.1.1"
+    "botify-sdk-middlewares": "^0.5.3",
+    "string": "^3.1.1",
+    "superagent": "^1.5.0"
   },
   "devDependencies": {
     "babel": "^5.0.8",
