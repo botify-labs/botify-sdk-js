@@ -1,44 +1,51 @@
-Botify JS SDK
-=================
+# botify-sdk
+
 This package contains the Javascript SDK for Botify API.
 
 
 ## Installation
 ```SH
-npm install --save botify-sdk-js
-```
-
-## Usage
-The following shows how import the controllers and use:
-
-1) Import the module:
-```JS
-import botifySdk from 'botify-sdk-js';
-```
-
-2) Configure any authentication parameters. For example:
-```JS
-botifySdk.configuration.authorization = `Token ${token}`;
-```
-
-3) Access various controllers by:
-```JS
-botifySdk.AnalysisController.getAnalysisSummary({
-    username: 'foo',
-    projectSlug: 'bar',
-    analysisSlug: 'koo',
-}, callback);
+npm install --save botify-sdk
 ```
 
 ### UMD bundle
-An UMD bundle is available in `dist/botify-sdk-js.min.js`. It exposes the global variable `BotifySdkJs`.
+An UMD bundle is available in `dist/botify-sdk.min.js`. It means you can use the lib with any module loader, including Browserify and RequireJS.
+It exposes the global variable `BotifySDK`.
 
 ```HTML
-<script type="text/javascript" src="node_modules/botify-sdk-js/dist/botify-sdk-js.min.js"></script>
-```
-```JS
-BotifySdkJs.AnalysisController.getAnalysisSummary(params, callback);
+<script src="/node_modules/botify-sdk/dist/botify-sdk.min.js"></script>
 ```
 
-## Optimizations
-Middlewares are avalaible in the package [botify-sdk-js-middlewares](https://github.com/botify-labs/botify-sdk-js-middlewares). Consider using them for optimization and rate limit leverage.
+
+## Authentication
+```JS
+BotifySDK.authToken(token);
+```
+
+## Request API
+The SDK exposes a function for each REST API endpoint (operation). They comply with the following signature.
+```JS
+BotifySDK.Controller.operation(params, callback);
+```
+- `params` are documented either in the API documentation or in the SDK code.
+- `callback` are [NodeJS compliant callbacks](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/).
+
+### Example
+```JS
+BotifySDK.AnalysisController.getAnalysisSummary({
+    username: 'foo',
+    projectSlug: 'bar',
+    analysisSlug: 'koo',
+}, function(error, result) {
+  // Handle error/result
+});
+```
+
+### `getUrlsAggs`
+SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with.
+
+
+## Optimization
+Middlewares are avalaible in the package [botify-sdk-middlewares](https://github.com/botify-labs/botify-sdk-js-middlewares).
+
+Consider using them for optimization and rate limit leverage. Some have been included by default in this package.

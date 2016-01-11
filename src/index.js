@@ -1,10 +1,15 @@
-import baseSdk from '../lib';
+import baseSdk from './gen-sdk';
 import {
   applyMiddleware,
   apiErrorMiddleware,
   dedupleMiddleware,
   getUrlDetailEncodeMiddleware,
+  jobsMiddleware,
   queryMiddleware,
+  Query,
+  QueryAggregate,
+  ApiError,
+  ApiResponseError,
 } from 'botify-sdk-js-middlewares';
 
 
@@ -15,11 +20,18 @@ const sdk = applyMiddleware(
   getUrlDetailEncodeMiddleware,
   queryMiddleware(),
   dedupleMiddleware,
+  jobsMiddleware(),
 )(sdk);
 
 
-sdk.init = function init(token) {
+sdk.authToken = function authToken(token) {
   baseSdk.configuration.authorization = `Token ${token}`;
 };
 
 export default sdk;
+export {
+  Query,
+  QueryAggregate,
+  ApiError,
+  ApiResponseError,
+};
