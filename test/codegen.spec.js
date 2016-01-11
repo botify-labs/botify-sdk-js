@@ -95,26 +95,25 @@ describe('Controllers', () => {
   });
 
   it('must encode query parameters', done => {
-    const queryParam = 'http://google.com';
+    const queryParam = 'section://source.com';
 
     nock(BASEURI, { encodedQueryParams: true }) // Disable nock encoding
       .defaultReplyHeaders({
         'Content-Type': 'application/json',
       })
-      .get('/analyses/user/project/analysis/urls/fields/fat/suggest')
+      .post('/analyses/user/project/analysis/pdf')
       .query({
-        value: encodeURIComponent(queryParam),
+        section: encodeURIComponent(queryParam),
         area: 'current',
       })
       .reply(200, {});
 
-    BotifySdk.AnalysisController.getUrlsFieldSuggest({
+    BotifySdk.AnalysisController.createPdfExport({
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
-      field: 'fat',
       area: 'current',
-      value: queryParam,
+      section: queryParam,
     }, (error, result) => {
       done(error);
     });
