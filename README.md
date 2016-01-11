@@ -1,5 +1,7 @@
 # botify-sdk
 
+[![Build Status](https://travis-ci.org/botify-labs/botify-sdk-js.svg?branch=master)](https://travis-ci.org/botify-labs/botify-sdk-js)
+
 This package contains the Javascript SDK for Botify API.
 
 

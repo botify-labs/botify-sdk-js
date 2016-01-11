@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "0.10"
+  - "0.12"
+  - "4.0"
+before_install:
+install:
+script:
+  - ./script/test
+  - ./script/check
