@@ -10,7 +10,7 @@ import {
   QueryAggregate,
   ApiError,
   ApiResponseError,
-} from 'botify-sdk-js-middlewares';
+} from 'botify-sdk-middlewares';
 
 
 /** Apply default middlewares **/
@@ -21,11 +21,11 @@ const sdk = applyMiddleware(
   queryMiddleware(),
   dedupleMiddleware,
   jobsMiddleware(),
-)(sdk);
+)(baseSdk);
 
 
 sdk.authToken = function authToken(token) {
-  baseSdk.configuration.authorization = `Token ${token}`;
+  sdk.configuration.authorization = `Token ${token}`;
 };
 
 export default sdk;

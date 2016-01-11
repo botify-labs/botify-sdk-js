@@ -43,7 +43,7 @@
     "node": ">=0.10"
   },
   "dependencies": {
-    "botify-sdk-middlewares": "^0.5.2",
+    "botify-sdk-middlewares": "^0.5.3",
     "string": "^3.1.1",
     "superagent": "^1.5.0"
   },
