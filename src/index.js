@@ -4,7 +4,6 @@ import {
   apiErrorMiddleware,
   dedupleMiddleware,
   getUrlDetailEncodeMiddleware,
-  jobsMiddleware,
   queryMiddleware,
   Query,
   QueryAggregate,
@@ -20,7 +19,6 @@ const sdk = applyMiddleware(
   getUrlDetailEncodeMiddleware,
   queryMiddleware(),
   dedupleMiddleware,
-  jobsMiddleware(),
 )(baseSdk);
 
 
