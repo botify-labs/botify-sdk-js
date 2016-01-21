@@ -1,5 +1,4 @@
 .DS_Store
-blacklisted/
 codegen/botify-keys.json
 node_modules/
 npm-debug.log
