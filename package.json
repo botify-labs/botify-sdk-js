@@ -1,6 +1,6 @@
 {
   "name": "botify-sdk",
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta2",
   "description": "Botify Rest API SDK",
   "author": "Botify <labs@botify.com>",
   "license": "MIT",
