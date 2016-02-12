@@ -50,7 +50,7 @@ describe('Middlewares integration', () => {
     }, (error, result) => {
       chai.expect(error).to.be.instanceOf(ApiError);
       chai.expect(error.status).to.be.equal(500);
-      chai.expect(error.message).to.be.equal('ApiError: [500] - error payload');
+      chai.expect(error.message).to.be.equal('error payload');
       chai.expect(error.response).to.deep.equal({
         error: {
           message: 'Error 40',
