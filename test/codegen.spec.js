@@ -24,8 +24,14 @@ describe('Codegen Index', () => {
 
     const keys = Object.keys(controllers);
     keys.forEach(key => {
-      chai.expect(controllers[key]).to.be.equal(BotifySdk[key]);
+      chai.expect(BotifySdk[key]).to.be.equal(controllers[key]);
     });
+  });
+});
+
+describe('Configuration', () => {
+  it('must define BASE_URI as prod one', () => {
+    chai.expect(BotifySdk.configuration.BASEURI).to.be.equal('https://api.botify.com/v1');
   });
 });
 
