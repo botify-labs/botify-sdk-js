@@ -28,11 +28,7 @@ describe('Auth', () => {
 
 
 describe('Middlewares integration', () => {
-  const BASEURI = 'http://api.example.com/v1';
-  const TOKEN = 'aaaaaaaaaaaaa';
-
-  BotifySdk.configuration.BASEURI = BASEURI;
-  BotifySdk.configuration.authorization = `Token ${TOKEN}`;
+  const BASEURI = BotifySdk.configuration.BASEURI;
 
   it('apiErrorMiddleware: must transform error to ApiError instance', done => {
     nock(BASEURI)

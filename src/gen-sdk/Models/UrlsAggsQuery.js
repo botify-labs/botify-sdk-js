@@ -2,7 +2,7 @@
 /**
  * BotifyAPILib
  *
- * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 01/11/2016
+ * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 02/12/2016
  */
 var BaseModel = require("./BaseModel");
 /**

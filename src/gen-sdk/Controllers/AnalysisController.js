@@ -1,7 +1,7 @@
 /**
  * BotifyAPILib
  *
- * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 01/11/2016
+ * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 02/12/2016
  */
 
 var request = require('../Http/Client/RequestClient'),
@@ -23,7 +23,7 @@ var AnalysisController = {
      * @param {object} input    RequiredParameter: object containing any of the parameters to this API Endpoint.
      * @param {function} callback    Required parameter: Callback function in the form of function(error, response)
      *
-     * @return {CrawlListSerializer}
+     * @return {Analysis}
      */
     getAnalyses : function(input, callback){
         //Assign default values
@@ -1012,7 +1012,7 @@ var AnalysisController = {
      *     {UrlsFilter} urlsFilter    Required parameter: TODO: type description here
      *     {string} username    Required parameter: TODO: type description here
      *     {string|null} area    Optional parameter: Example: current
-     *     {string|null} section    Optional parameter: Example: overview
+     *     {array|null} sections    Optional parameter: Example: overview
      * 
      * @param {object} input    RequiredParameter: object containing any of the parameters to this API Endpoint.
      * @param {function} callback    Required parameter: Callback function in the form of function(error, response)
@@ -1038,7 +1038,7 @@ var AnalysisController = {
         //Process query parameters
         queryBuilder = APIHelper.appendUrlWithQueryParameters(queryBuilder, {
             "area" : (null != input.area)? input.area: "current",
-            "section" : (null != input.section)? input.section: "overview"
+            "sections" : (null != input.sections)? input.sections: "overview"
         });
 
         //validate and preprocess url

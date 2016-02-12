@@ -36,7 +36,7 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/CrawlListSerializer"
+              "$ref": "#/definitions/Analysis"
             }
           },
           "default": {
@@ -782,10 +782,14 @@
           {
             "description": "",
             "default": "overview",
+            "items": {
+              "type": "string"
+            },
             "required": false,
+            "collectionFormat": "csv",
             "in": "query",
-            "type": "string",
-            "name": "section"
+            "type": "array",
+            "name": "sections"
           }
         ],
         "tags": [
@@ -1357,7 +1361,7 @@
           "200": {
             "description": "Successful operation",
             "schema": {
-              "$ref": "#/definitions/ProjectSerializer"
+              "$ref": "#/definitions/Project"
             }
           },
           "default": {
@@ -1496,9 +1500,9 @@
       }
     }
   },
-  "host": "api.sandbox3.botify.com",
+  "host": "api.botify.com",
   "schemes": [
-    "http"
+    "https"
   ],
   "definitions": {
     "ProjectSavedFilter": {
@@ -1542,64 +1546,6 @@
         }
       }
     },
-    "DryRun": {
-      "required": [
-        "rules_config",
-        "dataset",
-        "sample_percent"
-      ],
-      "type": "object",
-      "properties": {
-        "job_id": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "job_url": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "job_status": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "rules_config": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "dataset": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "sample_percent": {
-          "description": "",
-          "format": "int64",
-          "maximum": 2147483647,
-          "readOnly": false,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "filter_predicate": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "filter_value": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "results": {
-          "readOnly": true,
-          "type": "object",
-          "description": ""
-        }
-      }
-    },
     "PdfExportStatus": {
       "type": "object",
       "properties": {
@@ -1634,11 +1580,137 @@
           "type": "string",
           "description": ""
         },
-        "section": {
+        "sections": {
           "readOnly": false,
-          "defaultValue": "overview",
+          "defaultValue": [
+            "overview"
+          ],
           "type": "string",
           "description": ""
+        },
+        "date_created": {
+          "readOnly": true,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        }
+      }
+    },
+    "UrlsQuery": {
+      "type": "object",
+      "properties": {
+        "fields": {
+          "description": "",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": false,
+          "type": "array"
+        },
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        },
+        "sort": {
+          "description": "",
+          "items": {
+            "type": "object"
+          },
+          "readOnly": false,
+          "type": "array"
+        }
+      }
+    },
+    "Default": {
+      "type": "object",
+      "properties": {}
+    },
+    "UrlsFilter": {
+      "type": "object",
+      "properties": {
+        "filters": {
+          "readOnly": false,
+          "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "Analysis": {
+      "required": [
+        "user"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "readOnly": true,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "user": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/User"
+        },
+        "slug": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "name": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "features": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_done": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "urls_in_queue": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "config": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "date_created": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_launched": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_finished": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "date_last_modified": {
+          "readOnly": false,
+          "type": "string",
+          "description": "Date of last modified analysis",
+          "format": "date-time"
         }
       }
     },
@@ -1724,92 +1796,7 @@
         }
       }
     },
-    "UrlsQuery": {
-      "type": "object",
-      "properties": {
-        "fields": {
-          "description": "",
-          "items": {
-            "type": "string"
-          },
-          "readOnly": false,
-          "type": "array"
-        },
-        "filters": {
-          "readOnly": false,
-          "type": "object",
-          "description": ""
-        },
-        "sort": {
-          "description": "",
-          "items": {
-            "type": "string"
-          },
-          "readOnly": false,
-          "type": "array"
-        }
-      }
-    },
-    "Default": {
-      "type": "object",
-      "properties": {}
-    },
-    "UrlsFilter": {
-      "type": "object",
-      "properties": {
-        "filters": {
-          "readOnly": false,
-          "type": "object",
-          "description": ""
-        }
-      }
-    },
-    "UserCredentials": {
-      "required": [
-        "username",
-        "password"
-      ],
-      "type": "object",
-      "properties": {
-        "username": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "password": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        }
-      }
-    },
-    "UrlsAggsQueries": {
-      "items": {
-        "$ref": "#/definitions/UrlsAggsQuery"
-      },
-      "type": "array"
-    },
-    "FieldValuesResult": {
-      "required": [
-        "value",
-        "nb_urls"
-      ],
-      "type": "object",
-      "properties": {
-        "value": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "nb_urls": {
-          "readOnly": false,
-          "type": "integer",
-          "description": "",
-          "format": "int64"
-        }
-      }
-    },
-    "ProjectSerializer": {
+    "Project": {
       "required": [
         "name",
         "slug",
@@ -1869,247 +1856,11 @@
         }
       }
     },
-    "CsvExportStatus": {
-      "required": [
-        "query"
-      ],
-      "type": "object",
-      "properties": {
-        "job_id": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "job_url": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "job_status": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "nb_results": {
-          "description": "",
-          "format": "int64",
-          "maximum": 2147483647,
-          "readOnly": false,
-          "minimum": 0,
-          "type": "integer"
-        },
-        "area": {
-          "readOnly": false,
-          "defaultValue": "current",
-          "type": "string",
-          "description": ""
-        },
-        "query": {
-          "readOnly": false,
-          "description": "",
-          "$ref": "#/definitions/UrlsQuery"
-        },
-        "results": {
-          "readOnly": true,
-          "type": "object",
-          "description": ""
-        }
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "login": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "email": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "is_organization": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "url": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "date_joined": {
-          "readOnly": false,
-          "type": "string",
-          "description": "",
-          "format": "date-time"
-        },
-        "status": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "first_name": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "last_name": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "company_name": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        }
-      }
-    },
-    "SegmentRules": {
-      "required": [
-        "config"
-      ],
-      "type": "object",
-      "properties": {
-        "id": {
-          "readOnly": true,
-          "type": "integer",
-          "description": "",
-          "format": "int64"
-        },
-        "config": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "date_created": {
-          "readOnly": true,
-          "type": "string",
-          "description": "",
-          "format": "date-time"
-        }
-      }
-    },
-    "SegmentRulesValidator": {
-      "required": [
-        "config"
-      ],
-      "type": "object",
-      "properties": {
-        "config": {
-          "readOnly": false,
-          "type": "string",
-          "description": ""
-        },
-        "results": {
-          "readOnly": true,
-          "type": "object",
-          "description": ""
-        }
-      }
-    },
-    "FieldValues": {
-      "required": [
-        "count",
-        "results"
-      ],
-      "type": "object",
-      "properties": {
-        "count": {
-          "readOnly": false,
-          "type": "integer",
-          "description": "",
-          "format": "int64"
-        },
-        "results": {
-          "description": "",
-          "items": {
-            "$ref": "#/definitions/FieldValuesResult"
-          },
-          "readOnly": false,
-          "type": "array"
-        }
-      }
-    },
-    "CrawlListSerializer": {
-      "required": [
-        "user"
-      ],
-      "type": "object",
-      "properties": {
-        "id": {
-          "readOnly": true,
-          "type": "integer",
-          "description": "",
-          "format": "int64"
-        },
-        "user": {
-          "readOnly": false,
-          "description": "",
-          "$ref": "#/definitions/User"
-        },
-        "slug": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "name": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "url": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "features": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "urls_done": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "urls_in_queue": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "config": {
-          "readOnly": true,
-          "type": "string",
-          "description": ""
-        },
-        "date_created": {
-          "readOnly": false,
-          "type": "string",
-          "description": "",
-          "format": "date-time"
-        },
-        "date_launched": {
-          "readOnly": false,
-          "type": "string",
-          "description": "",
-          "format": "date-time"
-        },
-        "date_finished": {
-          "readOnly": false,
-          "type": "string",
-          "description": "",
-          "format": "date-time"
-        },
-        "date_last_modified": {
-          "readOnly": false,
-          "type": "string",
-          "description": "Date of last modified analysis",
-          "format": "date-time"
-        }
-      }
+    "UrlsAggsQueries": {
+      "items": {
+        "$ref": "#/definitions/UrlsAggsQuery"
+      },
+      "type": "array"
     },
     "ProjectSettingsSerializer": {
       "required": [
@@ -2223,6 +1974,154 @@
         "header_settings": {
           "readOnly": false,
           "type": "object",
+          "description": ""
+        }
+      }
+    },
+    "FieldValuesResult": {
+      "required": [
+        "value",
+        "nb_urls"
+      ],
+      "type": "object",
+      "properties": {
+        "value": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "nb_urls": {
+          "readOnly": false,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        }
+      }
+    },
+    "CsvExportStatus": {
+      "required": [
+        "query"
+      ],
+      "type": "object",
+      "properties": {
+        "job_id": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "job_status": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "nb_results": {
+          "description": "",
+          "format": "int64",
+          "maximum": 2147483647,
+          "readOnly": false,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "area": {
+          "readOnly": false,
+          "defaultValue": "current",
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "query": {
+          "readOnly": false,
+          "description": "",
+          "$ref": "#/definitions/UrlsQuery"
+        },
+        "results": {
+          "readOnly": true,
+          "type": "object",
+          "description": ""
+        },
+        "date_created": {
+          "readOnly": true,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        }
+      }
+    },
+    "FieldValues": {
+      "required": [
+        "count",
+        "results"
+      ],
+      "type": "object",
+      "properties": {
+        "count": {
+          "readOnly": false,
+          "type": "integer",
+          "description": "",
+          "format": "int64"
+        },
+        "results": {
+          "description": "",
+          "items": {
+            "$ref": "#/definitions/FieldValuesResult"
+          },
+          "readOnly": false,
+          "type": "array"
+        }
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "login": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "email": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "is_organization": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "url": {
+          "readOnly": true,
+          "type": "string",
+          "description": ""
+        },
+        "date_joined": {
+          "readOnly": false,
+          "type": "string",
+          "description": "",
+          "format": "date-time"
+        },
+        "status": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "first_name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "last_name": {
+          "readOnly": false,
+          "type": "string",
+          "description": ""
+        },
+        "company_name": {
+          "readOnly": false,
+          "type": "string",
           "description": ""
         }
       }
