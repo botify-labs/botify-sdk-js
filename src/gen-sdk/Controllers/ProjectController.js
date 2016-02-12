@@ -1,7 +1,7 @@
 /**
  * BotifyAPILib
  *
- * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 01/11/2016
+ * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 02/12/2016
  */
 
 var request = require('../Http/Client/RequestClient'),
@@ -22,7 +22,7 @@ var ProjectController = {
      * @param {object} input    RequiredParameter: object containing any of the parameters to this API Endpoint.
      * @param {function} callback    Required parameter: Callback function in the form of function(error, response)
      *
-     * @return {ProjectSerializer}
+     * @return {Project}
      */
     getProjects : function(input, callback){
         //Assign default values

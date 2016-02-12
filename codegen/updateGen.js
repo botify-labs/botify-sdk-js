@@ -50,12 +50,18 @@ function retreiveSwaggerFile(cb) {
   }
 }
 
-function addCodegenSettings() {
+function prepareSwaggerFile() {
   var swaggerFile = fs.readJsonSync(SWAGGER_FILE_PATH);
   var codegenSettings = fs.readJsonSync(CODEGEN_SETTINGS_FILE_PATH);
 
+  // Add codegen settings
   console.log('Save swagger file with codegen settings at ' + SWAGGER_FILE_PATH);
   swaggerFile.info['x-codegen-settings'] = codegenSettings;
+
+  // Force host to prod
+  swaggerFile.schemes = ['https'];
+  swaggerFile.host = 'api.botify.com';
+
   fs.writeJsonSync(SWAGGER_FILE_PATH, swaggerFile, {spaces: 2});
 }
 
@@ -120,7 +126,7 @@ function extractAPIMATICArchive(archiveUrl, cb) {
 
 
 retreiveSwaggerFile(function() {
-  addCodegenSettings();
+  prepareSwaggerFile();
   generateSdk(function(archiveUrl) {
     extractAPIMATICArchive(archiveUrl, function() {
       process.exit(0);

@@ -28,11 +28,7 @@ describe('Auth', () => {
 
 
 describe('Middlewares integration', () => {
-  const BASEURI = 'http://api.example.com/v1';
-  const TOKEN = 'aaaaaaaaaaaaa';
-
-  BotifySdk.configuration.BASEURI = BASEURI;
-  BotifySdk.configuration.authorization = `Token ${TOKEN}`;
+  const BASEURI = BotifySdk.configuration.BASEURI;
 
   it('apiErrorMiddleware: must transform error to ApiError instance', done => {
     nock(BASEURI)
@@ -54,7 +50,7 @@ describe('Middlewares integration', () => {
     }, (error, result) => {
       chai.expect(error).to.be.instanceOf(ApiError);
       chai.expect(error.status).to.be.equal(500);
-      chai.expect(error.message).to.be.equal('ApiError: [500] - error payload');
+      chai.expect(error.message).to.be.equal('error payload');
       chai.expect(error.response).to.deep.equal({
         error: {
           message: 'Error 40',

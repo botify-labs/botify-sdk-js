@@ -3,7 +3,7 @@ import nock from 'nock';
 import path from 'path';
 import requireAll from 'require-all';
 
-import BotifySdk from '../src/gen-sdk';
+import BotifySdk, { ApiError } from '../src';
 
 
 /**
@@ -24,18 +24,20 @@ describe('Codegen Index', () => {
 
     const keys = Object.keys(controllers);
     keys.forEach(key => {
-      chai.expect(controllers[key]).to.be.equal(BotifySdk[key]);
+      chai.expect(BotifySdk[key]).to.not.be.undefined;
     });
+  });
+});
+
+describe('Configuration', () => {
+  it('must define prod BASE_URI', () => {
+    chai.expect(BotifySdk.configuration.BASEURI).to.be.equal('https://api.botify.com/v1');
   });
 });
 
 
 describe('Controllers', () => {
-  const BASEURI = 'http://api.example.com/v1';
-  const TOKEN = 'aaaaaaaaaaaaa';
-
-  BotifySdk.configuration.BASEURI = BASEURI;
-  BotifySdk.configuration.authorization = `Token ${TOKEN}`;
+  const BASEURI = BotifySdk.configuration.BASEURI;
 
   it('must use setup BASEURI', done => {
     nock(BASEURI)
@@ -55,6 +57,9 @@ describe('Controllers', () => {
   });
 
   it('must use setup Token', done => {
+    const TOKEN = 'aaaaaaaaaaaaa';
+    BotifySdk.configuration.authorization = `Token ${TOKEN}`;
+
     nock(BASEURI, {
       reqheaders: {
         Authorization: `Token ${TOKEN}`,
@@ -84,7 +89,6 @@ describe('Controllers', () => {
       .get('/analyses/user/project/analysis')
       .reply(200, {});
 
-    BotifySdk.configuration.authorization = `Token ${TOKEN}`;
     BotifySdk.AnalysisController.getAnalysisSummary({
       username: 'user',
       projectSlug: 'project',
@@ -95,7 +99,7 @@ describe('Controllers', () => {
   });
 
   it('must encode query parameters', done => {
-    const queryParam = 'section://source.com';
+    const sections = ['a', 'b', 'c'];
 
     nock(BASEURI, { encodedQueryParams: true }) // Disable nock encoding
       .defaultReplyHeaders({
@@ -103,7 +107,7 @@ describe('Controllers', () => {
       })
       .post('/analyses/user/project/analysis/pdf')
       .query({
-        section: encodeURIComponent(queryParam),
+        sections: encodeURIComponent(sections),
         area: 'current',
       })
       .reply(200, {});
@@ -113,7 +117,7 @@ describe('Controllers', () => {
       projectSlug: 'project',
       analysisSlug: 'analysis',
       area: 'current',
-      section: queryParam,
+      sections,
     }, (error, result) => {
       done(error);
     });
@@ -121,12 +125,13 @@ describe('Controllers', () => {
 
   it('must join csv collection query parameters by commas', done => {
     const fields = ['foo', 'bar'];
+    const url = 'http://google.com';
 
     nock(BASEURI)
       .defaultReplyHeaders({
         'Content-Type': 'application/json',
       })
-      .get('/analyses/user/project/analysis/urls/http%3A%2F%2Fgoogle.com')
+      .get('/analyses/user/project/analysis/urls/' + encodeURIComponent(url))
       .query({
         fields: fields.join(','),
         area: 'current',
@@ -137,7 +142,7 @@ describe('Controllers', () => {
       username: 'user',
       projectSlug: 'project',
       analysisSlug: 'analysis',
-      url: 'http%3A%2F%2Fgoogle.com',
+      url,
       area: 'current',
       fields,
     }, (error, result) => {
@@ -198,7 +203,7 @@ describe('Controllers', () => {
     });
   });
 
-  it('must return PARSED data given by the API', done => {
+  it('must return response given by the API', done => {
     const response = { a: 'a', b: []};
 
     nock(BASEURI)
@@ -219,7 +224,7 @@ describe('Controllers', () => {
     });
   });
 
-  it('must return a payload error with the NOT PARSED response when API returns an 4xx status code', done => {
+  it('must return an ApiError with status and response when API returns an 4xx status code', done => {
     const response = {
       error_code: 41,
       message: 'The analysis does not exist',
@@ -237,17 +242,17 @@ describe('Controllers', () => {
       projectSlug: 'project',
       analysisSlug: 'analysis',
     }, (error, result) => {
+      chai.expect(error).to.be.instanceof(ApiError);
       chai.expect(error).to.deep.equal({
-        errorMessage: 'HTTP Response Not OK',
-        errorCode: 404,
-        errorResponse: JSON.stringify(response),
+        status: 404,
+        response,
+        meta: {},
       });
-      chai.expect(result).to.be.equal(null);
       done();
     });
   });
 
-  it('must return a payload error with the NOT PARSED response when API returns a 500 status code', done => {
+  it('must return an ApiError with status and response when API when API returns a 500 status code', done => {
     const response = {
       error_code: 41,
       message: 'The analysis does not exist',
@@ -265,12 +270,12 @@ describe('Controllers', () => {
       projectSlug: 'project',
       analysisSlug: 'analysis',
     }, (error, result) => {
+      chai.expect(error).to.be.instanceof(ApiError);
       chai.expect(error).to.deep.equal({
-        errorMessage: 'error payload',
-        errorCode: 500,
-        errorResponse: JSON.stringify(response),
+        status: 500,
+        response,
+        meta: {},
       });
-      chai.expect(result).to.be.equal(null);
       done();
     });
   });
