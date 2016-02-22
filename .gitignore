@@ -1,5 +1,7 @@
 .DS_Store
 codegen/botify-keys.json
+lib/
+dist/
 node_modules/
 npm-debug.log
 stats.json

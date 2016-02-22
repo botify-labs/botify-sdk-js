@@ -26,10 +26,8 @@ sdk.authToken = function authToken(token) {
   sdk.configuration.authorization = `Token ${token}`;
 };
 
+sdk.Query = Query;
+sdk.QueryAggregate = QueryAggregate;
+sdk.ApiError = ApiError;
+sdk.ApiResponseError = ApiResponseError;
 export default sdk;
-export {
-  Query,
-  QueryAggregate,
-  ApiError,
-  ApiResponseError,
-};
