@@ -6,7 +6,7 @@
 This package contains the Javascript SDK for Botify API.
 API documentation can be found at [https://developers.botify.com/api/](https://developers.botify.com/api/).
 
-**Demo:** [Fiddle](https://jsfiddle.net/uaoy0q8f/9/)
+**SDK Demo:** [link](https://jsfiddle.net/8k20pbua/11/ )
 
 
 ## Installation
@@ -17,6 +17,7 @@ npm install --save botify-sdk@1.0.0-beta4
 ```
 ```JS
 var BotifySDK = require('botify-sdk');
+
 BotifySDK.authToken(token);
 BotifySDK.AnalysisController.getAnalysisSummary({
   username: 'foo',
@@ -70,27 +71,31 @@ BotifySDK.authToken(token);
 **How to get your token:** [https://developers.botify.com/api/authentication/](https://developers.botify.com/api/authentication/)
 
 ### Request API
-The SDK exposes a function for each operation. They comply with the following signature.
-Full list of operations at [https://developers.botify.com/api/reference](https://developers.botify.com/api/reference)
+The SDK exposes a function for each operation. They comply with the following signature:
 ```JS
 BotifySDK.Controller.operation(params, callback);
 ```
-- `params` are documented either in the API documentation or in the SDK code.
-- `callback` are [NodeJS compliant callbacks](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/).
+- `params` (object): params are documented both in the SDK code or in the API documentation (becareful that in the JS SDK params are **camelcased**).
+- `callback` (function): [NodeJS compliant callback](http://fredkschott.com/post/2014/03/understanding-error-first-callbacks-in-node-js/).
+
+Full list of operations at [https://developers.botify.com/api/reference](https://developers.botify.com/api/reference)
+
 
 ### Example
 ```JS
 BotifySDK.AnalysisController.getAnalysisSummary({
-    username: 'foo',
-    projectSlug: 'bar',
-    analysisSlug: 'koo',
+  username: 'foo',
+  projectSlug: 'bar',
+  analysisSlug: 'koo',
 }, function(error, result) {
-  // Handle error/result
+  // Handle response
 });
 ```
 
 ### `getUrlsAggs`
 SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with. [More information](https://github.com/botify-labs/botify-sdk-js-middlewares/blob/master/docs/middlewares/queryMiddleware.md)
+
+Example of Query usage in the [demo](https://jsfiddle.net/8k20pbua/11/)
 
 
 ## Optimization
