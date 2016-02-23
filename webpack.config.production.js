@@ -5,6 +5,7 @@ var baseConfig = require('./webpack.config.base');
 
 var config = Object.create(baseConfig);
 
+config.devtool = 'source-map';
 config.entry = './src/index.js';
 config.output.filename = 'dist/botify-sdk.min.js';
 
