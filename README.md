@@ -4,11 +4,12 @@
 [![Build Status](https://travis-ci.org/botify-labs/botify-sdk-js.svg?branch=master)](https://travis-ci.org/botify-labs/botify-sdk-js)
 
 This package contains the Javascript SDK for Botify API.
+API documentation can be found at [https://developers.botify.com/api/](https://developers.botify.com/api/).
 
 
 ## Installation
 ```SH
-npm install --save botify-sdk
+npm install --save botify-sdk@1.0.0-beta4
 ```
 
 ### UMD bundle
@@ -43,6 +44,9 @@ BotifySDK.AnalysisController.getAnalysisSummary({
   // Handle error/result
 });
 ```
+
+### Demo
+[Fiddle](https://jsfiddle.net/uaoy0q8f/9/)
 
 ### `getUrlsAggs`
 SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with. [More information](https://github.com/botify-labs/botify-sdk-js-middlewares/blob/master/docs/middlewares/queryMiddleware.md)
