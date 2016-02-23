@@ -92,7 +92,7 @@ BotifySDK.AnalysisController.getAnalysisSummary({
 });
 ```
 
-### `getUrlsAggs`
+### getUrlsAggs
 SDK exposes `Query` and `QueryAggregate` models that can be used as input for `Analysis.getUrlsAggs` to make this complex endpoint a lot easier to deal with. [More information](https://github.com/botify-labs/botify-sdk-js-middlewares/blob/master/docs/middlewares/queryMiddleware.md)
 
 Example of Query usage in the [demo](https://jsfiddle.net/8k20pbua/11/)
