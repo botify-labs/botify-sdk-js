@@ -6,7 +6,7 @@
 This package contains the Javascript SDK for Botify API.
 API documentation can be found at [https://developers.botify.com/api/](https://developers.botify.com/api/).
 
-**SDK Demo:** [link](https://jsfiddle.net/8k20pbua/11/ )
+**SDK Demo:** [link](https://jsfiddle.net/8k20pbua/12/)
 
 
 ## Installation
