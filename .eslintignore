@@ -1,5 +1,5 @@
 dist/*
 lib/*
-src/gen-sdk/*
+src/base/*
 node_modules/*
 webpack.config*.js
