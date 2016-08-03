@@ -13,7 +13,7 @@ API documentation can be found at [https://developers.botify.com/api/](https://d
 
 ### Node.js, Webpack, Browserify
 ```SH
-npm install --save botify-sdk@1.0.0-beta4
+npm install --save botify-sdk@1.0.0-beta5
 ```
 ```JS
 var BotifySDK = require('botify-sdk');
@@ -30,7 +30,7 @@ BotifySDK.AnalysisController.getAnalysisSummary({
 
 ### Vanilla javascript
 ```HTML
-<script src="https://cdn.jsdelivr.net/botify/1.0.0-beta4/botify-sdk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/botify/1.0.0-beta5/botify-sdk.min.js"></script>
 <script>
   BotifySDK.authToken(token);
   BotifySDK.AnalysisController.getAnalysisSummary({
@@ -45,7 +45,7 @@ BotifySDK.AnalysisController.getAnalysisSummary({
 
 ### Require.JS (AMD)
 ```HTML
-<script src="https://cdn.jsdelivr.net/botify/1.0.0-beta4/botify-sdk.min.js"></script>
+<script src="https://cdn.jsdelivr.net/botify/1.0.0-beta5/botify-sdk.min.js"></script>
 <script>
   define(["BotifySDK"], function(BotifySDK) {
     BotifySDK.authToken(token);
