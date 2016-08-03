@@ -1,10 +1,15 @@
 /**
  * BotifyAPILib
  *
- * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 02/12/2016
+
  */
 
 var configuration = {
+    headers: {
+        "X-Botify-Client": "unknown",
+        "accept": "application/json; version=1.0.0"
+    },
+
     //The base Uri for API calls
     BASEURI : "https://api.botify.com/v1",
 

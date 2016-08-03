@@ -1,9 +1,8 @@
-import baseSdk from './gen-sdk';
+import baseSdk from './base';
 import {
   applyMiddleware,
   apiErrorMiddleware,
   dedupleMiddleware,
-  getUrlDetailEncodeMiddleware,
   queryMiddleware,
   Query,
   QueryAggregate,
@@ -16,7 +15,6 @@ import {
 
 const sdk = applyMiddleware(
   apiErrorMiddleware,
-  getUrlDetailEncodeMiddleware,
   queryMiddleware(),
   dedupleMiddleware,
 )(baseSdk);

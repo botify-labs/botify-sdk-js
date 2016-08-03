@@ -9,7 +9,12 @@ var APIHelper = require('../../APIHelper');
 var request = require("superagent");
 var stream = require('stream');
 
+var configuration = require('../../configuration');
 var convertHttpRequest = function (req) {
+    Object.keys(configuration.headers).forEach(function (key) {
+        req.headers[key] = configuration.headers[key];
+    });
+
     //Convert to superagents's version of http request
     var newRequest = request(req.method, req.queryUrl);
 

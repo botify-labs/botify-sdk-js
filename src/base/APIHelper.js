@@ -1,7 +1,7 @@
 /**
  * BotifyAPILib
  *
- * This file was automatically generated for Botify by APIMATIC BETA v2.0 on 02/12/2016
+
  */
  
 var stream = require('stream');
@@ -14,34 +14,32 @@ var APIHelper = {
      * @param	{String} queryBuilder    The query string builder to replace the template parameters
      * @param	{Array} parameters    The parameters to replace in the queryBuilder 
      */
-    appendUrlWithTemplateParameters:function(queryBuilder, parameters) {
-            
+    appendUrlWithTemplateParameters:function(queryBuilder, parameters) {            
         //perform parameter validation
         if(queryBuilder == null) {
             console.log('queryBuilder is null');
             return;
         }
-
         if(parameters ==null) {
             return queryBuilder;
-        }
-             
+        }             
         //iterate and replace parameters             
         for(var key in parameters) {
             var replaceValue = "";
-
             //load parameter value
             var element =  parameters[key];
-
             if(element == null) {
                 replaceValue = "";
             } else if (element instanceof Array) {
-                replaceValue = element.join("/");
+                replaceValue = element.map(function(element){
+                    return encodeURIComponent(element);
+                })
+                replaceValue = replaceValue.join("/");
             } else {
-                replaceValue = element.toString();
+                replaceValue = encodeURIComponent(element.toString());
             }
             queryBuilder = queryBuilder.replace('{'+(key)+'}', replaceValue)   
-            }
+        }
         return queryBuilder;
     },
 
@@ -51,7 +49,6 @@ var APIHelper = {
      * @param	{Array} parameters   The parameters to append 
      */
     appendUrlWithQueryParameters:function(queryBuilder, parameters) {
-
         //perform parameter validation
         if(queryBuilder == null) {
             console.log('queryBuilder is null');
@@ -73,29 +70,24 @@ var APIHelper = {
      * @param {String} url    The Url to process
      * @return {String}   Pocessed url 
      */
-    cleanUrl:function(url) {
-            
-        //ensure that the urls are absolute
-            
+    cleanUrl:function(url) {            
+        //ensure that the urls are absolute            
         var re = /^https?:\/\/[^\/]+/; 
-        var str = url;
-            
+        var str = url;            
         var match = url.match(re);
         if(match==null) {
             console.log('Invalid Url format');
-            return;
-                
+            return;                
         }
         //remove redundant forward slashes
         var protocol = match[0];
         var queryUrl = url.substring(protocol.length);
-        queryUrl = queryUrl.replace(/\/\/+/,"/");
-                    
+        queryUrl = queryUrl.replace(/\/\/+/,"/");                    
         var result = protocol+queryUrl;  
-			    return result;
+        return result;
     },        
     
-	/**
+    /**
      * JSON Serialization of a given object.
      * @param	{Object} data The object to serialize into JSON
      * @return	The	serialized Json string representation of the given object 
@@ -104,21 +96,20 @@ var APIHelper = {
         return JSON.stringify(data);
     },
     
-	/**
+    /**
      * Formats the template parameters in the string
      * @param	str     The string containing the template
      * @return	The string with template parameters filled in. 
      */
-    formatString: function(str){
-		
-		if (!str || arguments.length <=1 ) return str;
-		var args = arguments;
-		for (var i = 1; i < arguments.length; i++) {       
-		    var reg = new RegExp("\\{" + (i - 1) + "\\}", "gm");             
-		str = str.replace(reg, arguments[i]);
-		}
-		return str;
-	},
+    formatString: function(str){        
+        if (!str || arguments.length <=1 ) return str;
+        var args = arguments;
+        for (var i = 1; i < arguments.length; i++) {       
+            var reg = new RegExp("\\{" + (i - 1) + "\\}", "gm");             
+            str = str.replace(reg, arguments[i]);
+        }
+        return str;
+    },
 
     /**
      * Cleans the object by removing null properties.
@@ -126,25 +117,25 @@ var APIHelper = {
      * @return	{object} Returns the cleaned version of the object.
      */
     cleanObject: function(input){
-		if(input instanceof stream.Stream){
-		    return input;
-		}
-		for(var key in input) {
-			var value = input[key];
-		    if (value == null || value == undefined){
-				if (input.constructor === Array){input.splice(key, 1)}
-				else delete input[key];
-			} else if (Object.prototype.toString.call(value) === '[object Object]') {
-				this.cleanObject(value);
-			} else if (value.constructor === Array) {
-				this.cleanObject(value);
-			}
-		}
-		return input;
+        if(input instanceof stream.Stream){
+            return input;
+        }
+        for(var key in input) {
+            var value = input[key];
+            if (value == null || value == undefined){
+                if (input.constructor === Array){input.splice(key, 1)}
+                else delete input[key];
+            } else if (Object.prototype.toString.call(value) === '[object Object]') {
+                this.cleanObject(value);
+            } else if (value.constructor === Array) {
+                this.cleanObject(value);
+            }
+        }
+        return input;
     },
 
 
-	/**
+    /**
      * Shallow merges the properties of two objects
      * @param {object} first The object to merge in to
      * @param {object} second The object to be added to first
@@ -153,7 +144,7 @@ var APIHelper = {
      */
     merge:function(first,second){
         for (var attrname in second) { first[attrname] = second[attrname]; }
-	    return first;
+        return first;
     },
 
     /**
@@ -164,7 +155,6 @@ var APIHelper = {
             return false;
         }
         if(value.length == 0) return true;
-
         return value.every(function (obj) {
             return obj == null || obj == undefined || obj.constructor && [String, Number, Boolean].indexOf(obj.constructor) >=0 
         });
@@ -184,7 +174,6 @@ var APIHelper = {
             if(value instanceof stream.Stream){
                 keys.push({key:key,value:value});
             } else if (value instanceof Array) {
-
                 var arrayFormat = "{0}[{1}]";
                 if(this.isPrimitiveArray(value)){
                     value = value.join(",");
